@@ -24,15 +24,6 @@ func main() {
 		_ = server.Shutdown()
 	}()
 
-	port := os.Getenv("PORT")
-	log.Printf("PORT loaded from env var: [%s]", port)
-	if port != "" {
-		server.Port, err = strconv.Atoi(port)
-		if err != nil {
-			log.Fatalln(err)
-		}
-	}
-
 	parser := flags.NewParser(server, flags.Default)
 	parser.ShortDescription = "YoFio Recruitment - Tech Challenge"
 	parser.LongDescription = swaggerSpec.Spec().Info.Description
@@ -52,6 +43,16 @@ func main() {
 			}
 		}
 		os.Exit(code)
+	}
+
+	port := os.Getenv("PORT")
+	log.Printf("PORT loaded from env var: [%s]", port)
+	if port != "" {
+		server.Host = ""
+		server.Port, err = strconv.Atoi(port)
+		if err != nil {
+			log.Fatalln(err)
+		}
 	}
 
 	server.ConfigureAPI()
