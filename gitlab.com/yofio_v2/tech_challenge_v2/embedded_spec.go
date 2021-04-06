@@ -123,11 +123,9 @@ func init() {
     "People": {
       "type": "object",
       "required": [
-        "name",
-        "lastName",
         "birthdate",
-        "location",
-        "photo"
+        "lastName",
+        "name"
       ],
       "properties": {
         "birthdate": {
@@ -147,7 +145,8 @@ func init() {
         },
         "photo": {
           "type": "string",
-          "format": "byte"
+          "format": "byte",
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
         }
       },
       "xml": {
@@ -268,11 +267,9 @@ func init() {
     "People": {
       "type": "object",
       "required": [
-        "name",
-        "lastName",
         "birthdate",
-        "location",
-        "photo"
+        "lastName",
+        "name"
       ],
       "properties": {
         "birthdate": {
@@ -292,7 +289,8 @@ func init() {
         },
         "photo": {
           "type": "string",
-          "format": "byte"
+          "format": "byte",
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
         }
       },
       "xml": {

@@ -1,99 +1,100 @@
+---
 swagger: "2.0"
 info:
   description: ""
-  version: "1.0.0"
-  title: "YoFio Recruitment - Tech Challenge"
-  termsOfService: "http://swagger.io/terms/"
+  version: 1.0.0
+  title: YoFio Recruitment - Tech Challenge
+  termsOfService: http://swagger.io/terms/
   contact:
-    email: "ogaravito@yofio.co"
+    email: ogaravito@yofio.co
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "tech-challenge-v2.herokuapp.com"
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: tech-challenge-v2.herokuapp.com
 tags:
-- name: "form"
-  description: "Basic test for collecting a form"
+- name: form
+  description: Basic test for collecting a form
 schemes:
-- "http"
+- http
 paths:
   /:
     get:
       tags:
-        - "general"
-      summary: "Add a new registration to the database"
+      - general
+      summary: Add a new registration to the database
       description: ""
-      operationId: "healthcheck"
+      operationId: healthcheck
       consumes:
-      - "application/json"
+      - application/json
       produces:
-      - "application/json"
+      - application/json
+      parameters: []
       responses:
         "200":
-          description: "OK"
+          description: OK
   /registration:
     post:
       tags:
-      - "form"
-      summary: "Add a new registration to the database"
-      operationId: "addPeople"
+      - form
+      summary: Add a new registration to the database
+      operationId: addPeople
       consumes:
-      - "application/json"
+      - application/json
       produces:
-      - "application/json"
+      - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "People object that needs to be added to the database"
+      - in: body
+        name: body
+        description: People object that needs to be added to the database
         required: true
         schema:
-          $ref: "#/definitions/People"
+          $ref: '#/definitions/People'
       responses:
         "201":
-          description: "People register was successfully created in database"
+          description: People register was successfully created in database
           schema:
             $ref: '#/definitions/ApiResponse'
         "400":
-          description: "Invalid input."
+          description: Invalid input.
 definitions:
   Location:
-    type: "object"
+    type: object
     properties:
       latitude:
-        type: "number"
-        format: "float64"
+        type: number
+        format: float64
       longitude:
-        type: "number"
-        format: "float64"
+        type: number
+        format: float64
     xml:
-      name: "Tag"
+      name: Tag
   People:
-    type: "object"
+    type: object
     required:
-    - "name"
-    - "lastName"
-    - "birthdate"
-    - "location"
-    - "photo"
+    - birthdate
+    - lastName
+    - name
     properties:
       name:
-        type: "string"
-        example: "Peter"
+        type: string
+        example: Peter
       lastName:
-        type: "string"
-        example: "Parker"
+        type: string
+        example: Parker
       birthdate:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
       photo:
-        type: "string"
-        format: "byte"
+        type: string
+        format: byte
+        pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
       location:
-        $ref: "#/definitions/Location"
+        $ref: '#/definitions/Location'
     xml:
-      name: "Pet"
+      name: Pet
   ApiResponse:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "string"
-        format: "uuid"
+        type: string
+        format: uuid

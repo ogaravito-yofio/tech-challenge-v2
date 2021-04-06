@@ -44,7 +44,15 @@ func configureAPI(api *operations.TechChallengeV2API) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.FormAddPeopleHandler = form.AddPeopleHandlerFunc(func(params form.AddPeopleParams) middleware.Responder {
-		log.Printf("Receiving a request for creating new people")
+		log.Printf("Receiving a request for creating new people with data: \n[name: %s] [lastname: %s] "+
+			"[birthdate: %s]", *params.Body.Name, *params.Body.LastName, *params.Body.Birthdate)
+		if params.Body.Location != nil {
+			log.Printf("Including location info: [%.08f %.08f]", params.Body.Location.Latitude,
+				params.Body.Location.Longitude)
+		}
+		if params.Body.Photo != nil {
+			log.Printf("Including photo info: %v", params.Body.Photo.String())
+		}
 		p := &models.APIResponse{
 			ID: strfmt.UUID(uuid.New().String()),
 		}

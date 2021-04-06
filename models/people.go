@@ -27,17 +27,16 @@ type People struct {
 	LastName *string `json:"lastName"`
 
 	// location
-	// Required: true
-	Location *Location `json:"location"`
+	Location *Location `json:"location,omitempty"`
 
 	// name
 	// Required: true
 	Name *string `json:"name"`
 
 	// photo
-	// Required: true
+	// Pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
 	// Format: byte
-	Photo *strfmt.Base64 `json:"photo"`
+	Photo strfmt.Base64 `json:"photo,omitempty"`
 }
 
 // Validate validates this people
@@ -94,8 +93,8 @@ func (m *People) validateLastName(formats strfmt.Registry) error {
 
 func (m *People) validateLocation(formats strfmt.Registry) error {
 
-	if err := validate.Required("location", "body", m.Location); err != nil {
-		return err
+	if swag.IsZero(m.Location) { // not required
+		return nil
 	}
 
 	if m.Location != nil {
@@ -121,7 +120,11 @@ func (m *People) validateName(formats strfmt.Registry) error {
 
 func (m *People) validatePhoto(formats strfmt.Registry) error {
 
-	if err := validate.Required("photo", "body", m.Photo); err != nil {
+	if swag.IsZero(m.Photo) { // not required
+		return nil
+	}
+
+	if err := validate.Pattern("photo", "body", string(m.Photo), `^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$`); err != nil {
 		return err
 	}
 
