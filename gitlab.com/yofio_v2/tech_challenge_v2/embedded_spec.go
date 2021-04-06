@@ -19,7 +19,6 @@ var (
 func init() {
 	SwaggerJSON = json.RawMessage([]byte(`{
   "schemes": [
-    "https",
     "http"
   ],
   "swagger": "2.0",
@@ -35,7 +34,7 @@ func init() {
     },
     "version": "1.0.0"
   },
-  "host": "petstore.swagger.io",
+  "host": "tech-challenge-v2.herokuapp.com",
   "paths": {
     "/registration": {
       "post": {
@@ -145,7 +144,6 @@ func init() {
 }`))
 	FlatSwaggerJSON = json.RawMessage([]byte(`{
   "schemes": [
-    "https",
     "http"
   ],
   "swagger": "2.0",
@@ -161,7 +159,7 @@ func init() {
     },
     "version": "1.0.0"
   },
-  "host": "petstore.swagger.io",
+  "host": "tech-challenge-v2.herokuapp.com",
   "paths": {
     "/registration": {
       "post": {
