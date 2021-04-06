@@ -25,6 +25,7 @@ func main() {
 	}()
 
 	port := os.Getenv("PORT")
+	log.Printf("PORT loaded from env var: [%s]", port)
 	if port != "" {
 		server.Port, err = strconv.Atoi(port)
 		if err != nil {
