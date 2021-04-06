@@ -16,12 +16,25 @@ tags:
 schemes:
 - "http"
 paths:
+  /:
+    get:
+      tags:
+        - "general"
+      summary: "Add a new registration to the database"
+      description: ""
+      operationId: "healthcheck"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
   /registration:
     post:
       tags:
-      - "pet"
+      - "form"
       summary: "Add a new registration to the database"
-      description: ""
       operationId: "addPeople"
       consumes:
       - "application/json"

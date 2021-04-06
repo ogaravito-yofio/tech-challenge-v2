@@ -19,7 +19,8 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/ogaravito-yofio/tech-challenge-v2/gitlab.com/yofio_v2/tech_challenge_v2/operations/pet"
+	"github.com/ogaravito-yofio/tech-challenge-v2/gitlab.com/yofio_v2/tech_challenge_v2/operations/form"
+	"github.com/ogaravito-yofio/tech-challenge-v2/gitlab.com/yofio_v2/tech_challenge_v2/operations/general"
 )
 
 // NewTechChallengeV2API creates a new TechChallengeV2 instance
@@ -44,8 +45,11 @@ func NewTechChallengeV2API(spec *loads.Document) *TechChallengeV2API {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		PetAddPeopleHandler: pet.AddPeopleHandlerFunc(func(params pet.AddPeopleParams) middleware.Responder {
-			return middleware.NotImplemented("operation pet.AddPeople has not yet been implemented")
+		FormAddPeopleHandler: form.AddPeopleHandlerFunc(func(params form.AddPeopleParams) middleware.Responder {
+			return middleware.NotImplemented("operation form.AddPeople has not yet been implemented")
+		}),
+		GeneralHealthcheckHandler: general.HealthcheckHandlerFunc(func(params general.HealthcheckParams) middleware.Responder {
+			return middleware.NotImplemented("operation general.Healthcheck has not yet been implemented")
 		}),
 	}
 }
@@ -81,8 +85,10 @@ type TechChallengeV2API struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// PetAddPeopleHandler sets the operation handler for the add people operation
-	PetAddPeopleHandler pet.AddPeopleHandler
+	// FormAddPeopleHandler sets the operation handler for the add people operation
+	FormAddPeopleHandler form.AddPeopleHandler
+	// GeneralHealthcheckHandler sets the operation handler for the healthcheck operation
+	GeneralHealthcheckHandler general.HealthcheckHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -159,8 +165,11 @@ func (o *TechChallengeV2API) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.PetAddPeopleHandler == nil {
-		unregistered = append(unregistered, "pet.AddPeopleHandler")
+	if o.FormAddPeopleHandler == nil {
+		unregistered = append(unregistered, "form.AddPeopleHandler")
+	}
+	if o.GeneralHealthcheckHandler == nil {
+		unregistered = append(unregistered, "general.HealthcheckHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -253,7 +262,11 @@ func (o *TechChallengeV2API) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/registration"] = pet.NewAddPeople(o.context, o.PetAddPeopleHandler)
+	o.handlers["POST"]["/registration"] = form.NewAddPeople(o.context, o.FormAddPeopleHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"][""] = general.NewHealthcheck(o.context, o.GeneralHealthcheckHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

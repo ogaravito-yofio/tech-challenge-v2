@@ -6,6 +6,8 @@ import (
 	"crypto/tls"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
+	"github.com/ogaravito-yofio/tech-challenge-v2/gitlab.com/yofio_v2/tech_challenge_v2/operations/form"
+	"github.com/ogaravito-yofio/tech-challenge-v2/gitlab.com/yofio_v2/tech_challenge_v2/operations/general"
 	"github.com/ogaravito-yofio/tech-challenge-v2/models"
 	"log"
 	"net/http"
@@ -15,7 +17,6 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 
 	"github.com/ogaravito-yofio/tech-challenge-v2/gitlab.com/yofio_v2/tech_challenge_v2/operations"
-	"github.com/ogaravito-yofio/tech-challenge-v2/gitlab.com/yofio_v2/tech_challenge_v2/operations/pet"
 )
 
 //go:generate swagger generate server --target ../../../../tech-challenge-v2 --name TechChallengeV2 --spec ../../../swagger.yaml --server-package gitlab.com/yofio_v2/tech-challenge-v2 --principal interface{}
@@ -42,12 +43,17 @@ func configureAPI(api *operations.TechChallengeV2API) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.PetAddPeopleHandler = pet.AddPeopleHandlerFunc(func(params pet.AddPeopleParams) middleware.Responder {
+	api.FormAddPeopleHandler = form.AddPeopleHandlerFunc(func(params form.AddPeopleParams) middleware.Responder {
 		log.Printf("Receiving a request for creating new people")
 		p := &models.APIResponse{
 			ID: strfmt.UUID(uuid.New().String()),
 		}
-		return pet.NewAddPeopleCreated().WithPayload(p)
+		return form.NewAddPeopleCreated().WithPayload(p)
+	})
+
+	api.GeneralHealthcheckHandler = general.HealthcheckHandlerFunc(func(params general.HealthcheckParams) middleware.Responder {
+		log.Printf("Receiving a healthcheck request")
+		return general.NewHealthcheckOK()
 	})
 
 	api.PreServerShutdown = func() {}

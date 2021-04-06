@@ -36,6 +36,26 @@ func init() {
   },
   "host": "tech-challenge-v2.herokuapp.com",
   "paths": {
+    "/": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "general"
+        ],
+        "summary": "Add a new registration to the database",
+        "operationId": "healthcheck",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/registration": {
       "post": {
         "consumes": [
@@ -45,7 +65,7 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "pet"
+          "form"
         ],
         "summary": "Add a new registration to the database",
         "operationId": "addPeople",
@@ -161,6 +181,26 @@ func init() {
   },
   "host": "tech-challenge-v2.herokuapp.com",
   "paths": {
+    "/": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "general"
+        ],
+        "summary": "Add a new registration to the database",
+        "operationId": "healthcheck",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/registration": {
       "post": {
         "consumes": [
@@ -170,7 +210,7 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "pet"
+          "form"
         ],
         "summary": "Add a new registration to the database",
         "operationId": "addPeople",
