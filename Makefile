@@ -12,4 +12,3 @@ linter: ## Executes the linter for reviewing the code health
 	@echo "Executing linter for golang"
 	@golangci-lint run
 	@echo "Linter successfully passed"
-
