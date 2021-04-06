@@ -1,0 +1,87 @@
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "YoFio Recruitment - Tech Challenge"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "ogaravito@yofio.co"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+tags:
+- name: "form"
+  description: "Basic test for collecting a form"
+schemes:
+- "https"
+- "http"
+paths:
+  /registration:
+    post:
+      tags:
+      - "pet"
+      summary: "Add a new registration to the database"
+      description: ""
+      operationId: "addPeople"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "People object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/People"
+      responses:
+        "201":
+          description: "People register was successfully created in database"
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        "400":
+          description: "Invalid input."
+definitions:
+  Location:
+    type: "object"
+    properties:
+      latitude:
+        type: "number"
+        format: "float64"
+      longitude:
+        type: "number"
+        format: "float64"
+    xml:
+      name: "Tag"
+  People:
+    type: "object"
+    required:
+    - "name"
+    - "lastName"
+    - "birthdate"
+    - "location"
+    - "photo"
+    properties:
+      name:
+        type: "string"
+        example: "Peter"
+      lastName:
+        type: "string"
+        example: "Parker"
+      birthdate:
+        type: "string"
+        format: "date"
+      photo:
+        type: "string"
+        format: "byte"
+      location:
+        $ref: "#/definitions/Location"
+    xml:
+      name: "Pet"
+  ApiResponse:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
